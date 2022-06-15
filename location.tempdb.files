@@ -1,0 +1,12 @@
+/*ПРОВЕРКА ГДЕ НАХОДЯТСЯ ФАЙЛЫ БАЗЫ ДАННЫХ.*/
+
+Use master
+GO
+
+SELECT
+name AS [LogicalName], 
+physical_name AS [Location], 
+state_desc AS [Status]
+FROM sys.master_files
+WHERE database_id = DB_ID(N'tempdb');
+GO
