@@ -1,0 +1,15 @@
+/* Здесь перечислена каждая база данных, размер каждого файла, также как и размер каждой базы данных, а также общий размер всех файлов для каждой базы данных.
+Для этого требуется, чтобы каждая база данных (и их общий размер) была указана несколько раз (по одному разу для каждого файла).*/
+
+/* Мы можем использовать его для - SQL, SQL Server, mssql, t-sql.*/
+
+SELECT
+    d.name AS 'Database',
+    m.name AS 'File',
+    m.size,
+    m.size * 8/1024 'Size (MB)',
+    SUM(m.size * 8/1024) OVER (PARTITION BY d.name) AS 'Database Total',
+    m.max_size
+FROM sys.master_files m
+INNER JOIN sys.databases d ON
+d.database_id = m.database_id;
